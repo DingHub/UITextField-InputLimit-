@@ -1,0 +1,15 @@
+//
+//  UITextField+RegulateMoneyInput.h
+//  UITextField (InputLimit)
+//
+//  Created by admin on 16/5/8.
+//  Copyright © 2016年 Ding. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface UITextField (RegulateMoneyInput)
+
+@property (nonatomic, assign) IBInspectable BOOL isMoney;
+
+@end
