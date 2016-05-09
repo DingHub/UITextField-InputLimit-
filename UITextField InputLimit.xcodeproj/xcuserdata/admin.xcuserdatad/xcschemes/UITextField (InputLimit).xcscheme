@@ -17,7 +17,7 @@
                BlueprintIdentifier = "84E2064A1CDEE0E20014C1DB"
                BuildableName = "UITextField (InputLimit).app"
                BlueprintName = "UITextField (InputLimit)"
-               ReferencedContainer = "container:UITextField (InputLimit).xcodeproj">
+               ReferencedContainer = "container:UITextField InputLimit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "84E2064A1CDEE0E20014C1DB"
             BuildableName = "UITextField (InputLimit).app"
             BlueprintName = "UITextField (InputLimit)"
-            ReferencedContainer = "container:UITextField (InputLimit).xcodeproj">
+            ReferencedContainer = "container:UITextField InputLimit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "84E2064A1CDEE0E20014C1DB"
             BuildableName = "UITextField (InputLimit).app"
             BlueprintName = "UITextField (InputLimit)"
-            ReferencedContainer = "container:UITextField (InputLimit).xcodeproj">
+            ReferencedContainer = "container:UITextField InputLimit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -77,7 +77,7 @@
             BlueprintIdentifier = "84E2064A1CDEE0E20014C1DB"
             BuildableName = "UITextField (InputLimit).app"
             BlueprintName = "UITextField (InputLimit)"
-            ReferencedContainer = "container:UITextField (InputLimit).xcodeproj">
+            ReferencedContainer = "container:UITextField InputLimit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

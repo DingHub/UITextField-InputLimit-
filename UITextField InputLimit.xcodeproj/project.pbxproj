@@ -136,7 +136,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 84E206461CDEE0E20014C1DB /* Build configuration list for PBXProject "UITextField (InputLimit)" */;
+			buildConfigurationList = 84E206461CDEE0E20014C1DB /* Build configuration list for PBXProject "UITextField InputLimit" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -314,7 +314,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		84E206461CDEE0E20014C1DB /* Build configuration list for PBXProject "UITextField (InputLimit)" */ = {
+		84E206461CDEE0E20014C1DB /* Build configuration list for PBXProject "UITextField InputLimit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84E206601CDEE0E30014C1DB /* Debug */,
