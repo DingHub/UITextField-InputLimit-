@@ -9,101 +9,9 @@
 #import "UITextField+RegulateMoneyInput.h"
 #import <objc/runtime.h>
 
-
-@interface UITextFieldMoneyObserver : NSObject
-
-@property (nonatomic, copy) NSString *currectText;
-
-@end
-
-@implementation UITextFieldMoneyObserver
-
-- (void)textChanged:(UITextField *)textField {
-
-    NSString *allText = textField.text;
-
-    if (textField.isMoney) {
-        
-        NSString *newString;
-        if (_currectText) {
-            NSRange oldTextRange = [allText rangeOfString:_currectText];
-            newString = [allText substringFromIndex:oldTextRange.length];
-        } else {
-            newString = allText;
-        }
-        
-        NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."]invertedSet];
-        NSString *filtered = [[newString componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
-        if (filtered.length == 0) {
-            if ([newString isEqualToString:@""]) {//inputed backSpace
-                _currectText = newString;
-            }
-            textField.text = _currectText;
-            return;
-        }
-        if ([_currectText rangeOfString:@"."].length) {
-            if ([newString isEqualToString:@"."]) {//only one '.'
-                textField.text = _currectText;
-                return;
-            }
-            //2 charactors limited after '.'
-            NSArray *ary =  [_currectText componentsSeparatedByString:@"."];
-            if (ary.count == 2) {
-                if ([ary[1] length] >= 2) {
-                    NSArray *newStringArray = [newString componentsSeparatedByString:@"."];
-                    if (newStringArray.count == 2 && [newStringArray[1] length] == 1) {//inputed backSpace
-                        _currectText = newString;
-                    }
-                    textField.text = _currectText;
-                    return;
-                }
-            }
-
-        } else if (_currectText.length == 1) {
-            if ([newString isEqualToString:@"0"] && [_currectText isEqualToString:@"0"]) {
-                textField.text = _currectText;
-                return;
-            }
-        }
-        if (_currectText.length == 0 && [newString isEqualToString:@"."]) {//"."->"0."
-            textField.text
-            = _currectText
-            = @"0.";
-            return;
-        }
-        if (_currectText.length == 1 && [_currectText isEqualToString:@"0"]) {
-            if (![newString isEqualToString:@"."] && [newString intValue] > 0) {//'0'->other numbers
-                textField.text
-                = _currectText
-                = newString;
-                return;
-            }
-        }
-    }
-    _currectText = allText;
-
-}
-
-@end
-
-static BOOL kIsMoney = NO;
-static UITextFieldMoneyObserver *moneyObserver = nil;
-
 @implementation UITextField (RegulateMoneyInput)
 
-- (UITextFieldMoneyObserver *)moneyObserver {
-    if (moneyObserver == nil) {
-        moneyObserver = [[UITextFieldMoneyObserver alloc] init];
-    }
-    return moneyObserver;
-}
-
-- (void)addMoneyObserver {
-    [self addTarget:[self moneyObserver]
-             action:@selector(textChanged:)
-   forControlEvents:UIControlEventEditingChanged];
-}
-
+static BOOL kIsMoney = NO;
 - (void)setIsMoney:(BOOL)isMoney {
     objc_setAssociatedObject(self, &kIsMoney, @(isMoney), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if (isMoney) {
@@ -115,4 +23,82 @@ static UITextFieldMoneyObserver *moneyObserver = nil;
     return [objc_getAssociatedObject(self, &kIsMoney) boolValue];
 }
 
+- (void)addMoneyObserver {
+    [self addTarget:self
+             action:@selector(observeMoney)
+   forControlEvents:UIControlEventEditingChanged];
+}
+
+- (void)observeMoney {
+    
+    NSString *allText = self.text;
+    
+    if (self.isMoney) {
+        
+        NSString *newString;
+        if (self.correctText) {
+            NSRange oldTextRange = [allText rangeOfString:self.correctText];
+            newString = [allText substringFromIndex:oldTextRange.length];
+        } else {
+            newString = allText;
+        }
+        
+        NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."]invertedSet];
+        NSString *filtered = [[newString componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+        if (filtered.length == 0) {
+            if ([newString isEqualToString:@""]) {//inputed backSpace
+                self.correctText = newString;
+            }
+            self.text = self.correctText;
+            return;
+        }
+        if ([self.correctText rangeOfString:@"."].length) {
+            if ([newString isEqualToString:@"."]) {//only one '.'
+                self.text = self.correctText;
+                return;
+            }
+            //2 charactors limited after '.'
+            NSArray *ary =  [self.correctText componentsSeparatedByString:@"."];
+            if (ary.count == 2) {
+                if ([ary[1] length] >= 2) {
+                    NSArray *newStringArray = [newString componentsSeparatedByString:@"."];
+                    if (newStringArray.count == 2 && [newStringArray[1] length] == 1) {//inputed backSpace
+                        self.correctText= newString;
+                    }
+                    self.text = self.correctText;
+                    return;
+                }
+            }
+            
+        } else if (self.correctText.length == 1) {
+            if ([newString isEqualToString:@"0"] && [self.correctText isEqualToString:@"0"]) {
+                self.text = self.correctText;
+                return;
+            }
+        }
+        if (self.correctText.length == 0 && [newString isEqualToString:@"."]) {//"."->"0."
+            self.text
+            = self.correctText
+            = @"0.";
+            return;
+        }
+        if (self.correctText.length == 1 && [self.correctText isEqualToString:@"0"]) {
+            if (![newString isEqualToString:@"."] && [newString intValue] > 0) {//'0'->other numbers
+                self.text
+                = self.correctText
+                = newString;
+                return;
+            }
+        }
+    }
+    self.correctText = allText;
+}
+
+static NSString *kCurrectText;
+- (void)setCorrectText:(NSString *)correctText {
+    objc_setAssociatedObject(self, &kCurrectText, correctText, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+- (NSString *)correctText {
+    return objc_getAssociatedObject(self, &kCurrectText);
+}
 @end

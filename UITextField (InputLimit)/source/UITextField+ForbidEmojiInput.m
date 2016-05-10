@@ -9,49 +9,9 @@
 #import "UITextField+ForbidEmojiInput.h"
 #import <objc/runtime.h>
 
-
-@interface UITextFieldEmojiObserver : NSObject
-
-@property (nonatomic, copy) NSString *currectText;
-
-@end
-
-@implementation UITextFieldEmojiObserver
-
-- (void)textChanged:(UITextField *)textField {
-
-    NSString *allText = textField.text;
-    
-    if (textField.noEmoji) {
-        NSString *primaryLaguage = textField.textInputMode.primaryLanguage;
-        if (primaryLaguage == nil || [primaryLaguage isEqualToString:@"emoji"]) {
-            textField.text = _currectText;
-            return;
-        }
-    }
-    _currectText = allText;
-}
-
-@end
-
-
-static BOOL kNoEmoji = NO;
-static UITextFieldEmojiObserver *emojiObserver = nil;
-
 @implementation UITextField (ForbidEmojiInput)
 
-- (UITextFieldEmojiObserver *)emojiObserver {
-    if (emojiObserver == nil) {
-        emojiObserver = [[UITextFieldEmojiObserver alloc] init];
-    }
-    return emojiObserver;
-}
-
-- (void)addEmojiObserver {
-    [self addTarget:[self emojiObserver]
-             action:@selector(textChanged:)
-   forControlEvents:UIControlEventEditingChanged];
-}
+static BOOL kNoEmoji = NO;
 - (void)setNoEmoji:(BOOL)noEmoji {
     objc_setAssociatedObject(self, &kNoEmoji, @(noEmoji), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if (noEmoji) {
@@ -62,4 +22,29 @@ static UITextFieldEmojiObserver *emojiObserver = nil;
     return [objc_getAssociatedObject(self, &kNoEmoji) boolValue];
 }
 
+- (void)addEmojiObserver {
+    [self addTarget:self
+             action:@selector(observeEmoji)
+   forControlEvents:UIControlEventEditingChanged];
+}
+- (void)observeEmoji {
+    NSString *allText = self.text;
+    
+    if (self.noEmoji) {
+        NSString *primaryLaguage = self.textInputMode.primaryLanguage;
+        if (primaryLaguage == nil || [primaryLaguage isEqualToString:@"emoji"]) {
+            self.text = self.correctText;
+            return;
+        }
+    }
+    self.correctText = allText;
+}
+
+static NSString *kCorrectText;
+- (void)setCorrectText:(NSString *)correctText {
+    objc_setAssociatedObject(self, &kCorrectText, correctText, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+- (NSString *)correctText {
+    return objc_getAssociatedObject(self, &kCorrectText);
+}
 @end
