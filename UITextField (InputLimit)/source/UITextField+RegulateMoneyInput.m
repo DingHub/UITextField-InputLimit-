@@ -13,7 +13,7 @@
 
 static BOOL kIsMoney = NO;
 - (void)setIsMoney:(BOOL)isMoney {
-    objc_setAssociatedObject(self, &kIsMoney, @(isMoney), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &kIsMoney, @(isMoney), OBJC_ASSOCIATION_ASSIGN);
     if (isMoney) {
         self.keyboardType = UIKeyboardTypeDecimalPad;//We should set key type as decimalPad first
         [self addMoneyObserver];
@@ -96,7 +96,7 @@ static BOOL kIsMoney = NO;
 
 static NSString *kCurrectText;
 - (void)setCorrectText:(NSString *)correctText {
-    objc_setAssociatedObject(self, &kCurrectText, correctText, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &kCurrectText, correctText, OBJC_ASSOCIATION_COPY);
 }
 - (NSString *)correctText {
     return objc_getAssociatedObject(self, &kCurrectText);

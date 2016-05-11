@@ -13,7 +13,7 @@
 
 static BOOL kNoEmoji = NO;
 - (void)setNoEmoji:(BOOL)noEmoji {
-    objc_setAssociatedObject(self, &kNoEmoji, @(noEmoji), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &kNoEmoji, @(noEmoji), OBJC_ASSOCIATION_ASSIGN);
     if (noEmoji) {
         [self addEmojiObserver];
     }
@@ -42,7 +42,7 @@ static BOOL kNoEmoji = NO;
 
 static NSString *kCorrectText;
 - (void)setCorrectText:(NSString *)correctText {
-    objc_setAssociatedObject(self, &kCorrectText, correctText, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &kCorrectText, correctText, OBJC_ASSOCIATION_COPY);
 }
 - (NSString *)correctText {
     return objc_getAssociatedObject(self, &kCorrectText);

@@ -13,7 +13,7 @@
 
 static NSUInteger kMaxLength = 0;
 - (void)setMaxLength:(NSUInteger)maxLength {
-    objc_setAssociatedObject(self, &kMaxLength, @(maxLength), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &kMaxLength, @(maxLength), OBJC_ASSOCIATION_ASSIGN);
     [self addLengthObserver];
 }
 - (NSUInteger)maxLength {
@@ -37,9 +37,7 @@ static NSUInteger kMaxLength = 0;
         UITextRange *selectedRange = [self markedTextRange];
         if (!selectedRange || !selectedRange.start) {
             if (allText.length > maxLength) {
-                self.text
-                = self.correctText
-                = [allText substringToIndex:maxLength];
+                self.text = self.correctText;
                 return;
             }
         }
@@ -50,7 +48,7 @@ static NSUInteger kMaxLength = 0;
 
 static NSString *kCorrectText;
 - (void)setCorrectText:(NSString *)correctText {
-    objc_setAssociatedObject(self, &kCorrectText, correctText, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &kCorrectText, correctText, OBJC_ASSOCIATION_COPY);
 }
 - (NSString *)correctText {
     return objc_getAssociatedObject(self, &kCorrectText);
