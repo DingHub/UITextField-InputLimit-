@@ -28,30 +28,19 @@ static NSUInteger kMaxLength = 0;
 
 - (void)observeLength {
     
-    NSString *allText = self.text;
-
     if (self.maxLength > 0) {
-        NSUInteger maxLength = self.maxLength;
+        NSString *allText = self.text;
         // deal with Chinese, Japanese,..., input
         // when input somothing like pinyin, we will not judge the length
         UITextRange *selectedRange = [self markedTextRange];
         if (!selectedRange || !selectedRange.start) {
+            NSUInteger maxLength = self.maxLength;
             if (allText.length > maxLength) {
-                self.text = self.correctText;
-                return;
+                self.text = [self.text substringToIndex:maxLength];
             }
         }
     }
-    self.correctText = allText;
-}
-
-
-static NSString *kCorrectText;
-- (void)setCorrectText:(NSString *)correctText {
-    objc_setAssociatedObject(self, &kCorrectText, correctText, OBJC_ASSOCIATION_COPY);
-}
-- (NSString *)correctText {
-    return objc_getAssociatedObject(self, &kCorrectText);
+    
 }
 
 @end

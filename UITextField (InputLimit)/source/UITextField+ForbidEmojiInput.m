@@ -29,15 +29,15 @@ static BOOL kNoEmoji = NO;
 }
 - (void)observeEmoji {
     NSString *allText = self.text;
-    
+    static NSString *oldString = nil;
     if (self.noEmoji) {
         NSString *primaryLaguage = self.textInputMode.primaryLanguage;
         if (primaryLaguage == nil || [primaryLaguage isEqualToString:@"emoji"]) {
-            self.text = self.correctText;
+            self.text = oldString;
             return;
         }
     }
-    self.correctText = allText;
+    oldString = allText;
 }
 
 static NSString *kCorrectText;
