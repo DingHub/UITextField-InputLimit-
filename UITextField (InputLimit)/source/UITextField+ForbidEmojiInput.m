@@ -28,16 +28,16 @@ static BOOL kNoEmoji = NO;
    forControlEvents:UIControlEventEditingChanged];
 }
 - (void)observeEmoji {
-    NSString *allText = self.text;
-    static NSString *oldString = nil;
     if (self.noEmoji) {
+        NSString *allText = self.text;
+        static NSString *oldString = nil;
         NSString *primaryLaguage = self.textInputMode.primaryLanguage;
         if (primaryLaguage == nil || [primaryLaguage isEqualToString:@"emoji"]) {
             self.text = oldString;
             return;
         }
+        oldString = allText;
     }
-    oldString = allText;
 }
 
 static NSString *kCorrectText;

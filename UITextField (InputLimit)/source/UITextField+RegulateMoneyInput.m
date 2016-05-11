@@ -31,10 +31,8 @@ static BOOL kIsMoney = NO;
 
 - (void)observeMoney {
     
-    NSString *allText = self.text;
-    
     if (self.isMoney) {
-        
+        NSString *allText = self.text;
         NSString *newString;
         if (self.correctText) {
             NSRange oldTextRange = [allText rangeOfString:self.correctText];
@@ -90,8 +88,8 @@ static BOOL kIsMoney = NO;
                 return;
             }
         }
+        self.correctText = allText;
     }
-    self.correctText = allText;
 }
 
 static NSString *kCurrectText;
