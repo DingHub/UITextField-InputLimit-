@@ -11,13 +11,13 @@
 
 @implementation UITextField (LimitLength)
 
-static NSUInteger kMaxLength = 0;
+static NSUInteger mMaxLength = 0;
 - (void)setMaxLength:(NSUInteger)maxLength {
-    objc_setAssociatedObject(self, &kMaxLength, @(maxLength), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &mMaxLength, @(maxLength), OBJC_ASSOCIATION_ASSIGN);
     [self addLengthObserver];
 }
 - (NSUInteger)maxLength {
-    return [objc_getAssociatedObject(self, &kMaxLength) integerValue];
+    return [objc_getAssociatedObject(self, &mMaxLength) integerValue];
 }
 
 - (void)addLengthObserver {

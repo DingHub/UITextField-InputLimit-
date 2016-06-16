@@ -11,15 +11,15 @@
 
 @implementation UITextField (ForbidEmojiInput)
 
-static BOOL kNoEmoji = NO;
+static BOOL mNoEmoji = NO;
 - (void)setNoEmoji:(BOOL)noEmoji {
-    objc_setAssociatedObject(self, &kNoEmoji, @(noEmoji), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &mNoEmoji, @(noEmoji), OBJC_ASSOCIATION_ASSIGN);
     if (noEmoji) {
         [self addEmojiObserver];
     }
 }
 - (BOOL)noEmoji {
-    return [objc_getAssociatedObject(self, &kNoEmoji) boolValue];
+    return [objc_getAssociatedObject(self, &mNoEmoji) boolValue];
 }
 
 - (void)addEmojiObserver {
