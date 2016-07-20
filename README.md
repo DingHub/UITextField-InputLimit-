@@ -11,5 +11,5 @@ You can use these categories with code:<br>
 
 ![InputLimit](https://github.com/DingHub/ScreenShots/blob/master/UITextField%20(InputLimit)/tl1.png)
 
-And also in IB:<br>
+Or in IB:<br>
 ![InputLimit](https://github.com/DingHub/ScreenShots/blob/master/UITextField%20(InputLimit)/tl2.png)
