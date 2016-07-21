@@ -1,6 +1,5 @@
-# UITextField (InputLimit)
-Categories of UITextField to limit input
----
+
+#Categories of UITextField to limit input
 几个UITextField分类，用来限制输入
 ---
 eg: forbid emoji, only money decimal , limit length.<br>
