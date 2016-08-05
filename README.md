@@ -19,4 +19,4 @@ Or in IB:<br>
 ![InputLimit](https://github.com/DingHub/ScreenShots/blob/master/UITextField%20(InputLimit)/tl2.png)
 
 You can find a Swift version here:<br>
-您可以在这里找到一个Swift版本：[UITextField+InputLimit](https://github.com/DingHub/UITextField-InputLimit)
+在这里可以找到一个Swift版本：[UITextField+InputLimit](https://github.com/DingHub/UITextField-InputLimit)
