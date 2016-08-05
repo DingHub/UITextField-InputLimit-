@@ -32,14 +32,16 @@ static NSString *oldText = nil;
 }
 
 - (void)observeEmoji {
-    if (self.noEmoji) {
-        NSString *primaryLaguage = self.textInputMode.primaryLanguage;
-        if (primaryLaguage == nil || [primaryLaguage isEqualToString:@"emoji"]) {
-            self.text = oldText;
-            return;
-        }
-        oldText = self.text;
+    if (!self.noEmoji) {
+        return;
     }
+    
+    NSString *primaryLaguage = self.textInputMode.primaryLanguage;
+    if (primaryLaguage == nil || [primaryLaguage isEqualToString:@"emoji"]) {
+        self.text = oldText;
+        return;
+    }
+    oldText = self.text;
 }
 
 @end

@@ -29,14 +29,12 @@ static NSUInteger mMaxLength = 0;
 - (void)observeLength {
     
     if (self.maxLength > 0) {
-        NSString *allText = self.text;
         // deal with Chinese, Japanese,..., input
         // when input somothing like pinyin, we will not judge the length
         UITextRange *selectedRange = [self markedTextRange];
         if (!selectedRange || !selectedRange.start) {
-            NSUInteger maxLength = self.maxLength;
-            if (allText.length > maxLength) {
-                self.text = [self.text substringToIndex:maxLength];
+            if (self.text.length > self.maxLength) {
+                self.text = [self.text substringToIndex:self.maxLength];
             }
         }
     }

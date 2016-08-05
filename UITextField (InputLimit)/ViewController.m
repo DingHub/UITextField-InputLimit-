@@ -19,6 +19,10 @@ static const CGFloat kMaxMoney = 100.00;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self addTopTextField];
+}
+
+- (void)addTopTextField {
     CGRect textFrame = CGRectMake(15, 80, [UIScreen mainScreen].bounds.size.width - 30, 30);
     UITextField *topTextFiled = [[UITextField alloc] initWithFrame:textFrame];
     topTextFiled.borderStyle = UITextBorderStyleRoundedRect;

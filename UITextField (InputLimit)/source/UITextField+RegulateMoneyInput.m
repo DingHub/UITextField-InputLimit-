@@ -30,66 +30,64 @@ static BOOL mIsMoney = NO;
 }
 
 - (void)observeMoney {
+    if (!self.isMoney) {
+        return;
+    }
+    NSString *allText = self.text;
+    NSString *newText= allText;
+    if (self.correctText) {
+        NSRange oldTextRange = [allText rangeOfString:self.correctText];
+        newText = [allText substringFromIndex:oldTextRange.length];
+    }
     
-    if (self.isMoney) {
-        NSString *allText = self.text;
-        NSString *newString;
-        if (self.correctText) {
-            NSRange oldTextRange = [allText rangeOfString:self.correctText];
-            newString = [allText substringFromIndex:oldTextRange.length];
-        } else {
-            newString = allText;
+    NSCharacterSet *set = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."]invertedSet];
+    NSString *filtered = [[newText componentsSeparatedByCharactersInSet:set] componentsJoinedByString:@""];
+    if (filtered.length == 0) {
+        if ([newText isEqualToString:@""]) {//inputed backSpace
+            self.correctText = newText;
         }
-        
-        NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."]invertedSet];
-        NSString *filtered = [[newString componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
-        if (filtered.length == 0) {
-            if ([newString isEqualToString:@""]) {//inputed backSpace
-                self.correctText = newString;
-            }
+        self.text = self.correctText;
+        return;
+    }
+    if ([self.correctText rangeOfString:@"."].length) {
+        if ([newText isEqualToString:@"."]) {//only one '.'
             self.text = self.correctText;
             return;
         }
-        if ([self.correctText rangeOfString:@"."].length) {
-            if ([newString isEqualToString:@"."]) {//only one '.'
-                self.text = self.correctText;
-                return;
-            }
-            //2 charactors limited after '.'
-            NSArray *ary =  [self.correctText componentsSeparatedByString:@"."];
-            if (ary.count == 2) {
-                if ([ary[1] length] >= 2) {
-                    NSArray *newStringArray = [newString componentsSeparatedByString:@"."];
-                    if (newStringArray.count == 2 && [newStringArray[1] length] == 1) {//inputed backSpace
-                        self.correctText= newString;
-                    }
-                    self.text = self.correctText;
-                    return;
+        //2 charactors limited after '.'
+        NSArray *array =  [self.correctText componentsSeparatedByString:@"."];
+        if (array.count == 2) {
+            if ([array[1] length] >= 2) {
+                NSArray *newStringArray = [newText componentsSeparatedByString:@"."];
+                if (newStringArray.count == 2 && [newStringArray[1] length] == 1) {//inputed backSpace
+                    self.correctText= newText;
                 }
-            }
-            
-        } else if (self.correctText.length == 1) {
-            if ([newString isEqualToString:@"0"] && [self.correctText isEqualToString:@"0"]) {
                 self.text = self.correctText;
                 return;
             }
         }
-        if (self.correctText.length == 0 && [newString isEqualToString:@"."]) {//"."->"0."
-            self.text
-            = self.correctText
-            = @"0.";
+        
+    } else if (self.correctText.length == 1) {
+        if ([newText isEqualToString:@"0"] && [self.correctText isEqualToString:@"0"]) {
+            self.text = self.correctText;
             return;
         }
-        if (self.correctText.length == 1 && [self.correctText isEqualToString:@"0"]) {
-            if (![newString isEqualToString:@"."] && [newString intValue] > 0) {//'0'->other numbers
-                self.text
-                = self.correctText
-                = newString;
-                return;
-            }
-        }
-        self.correctText = allText;
     }
+    if (self.correctText.length == 0 && [newText isEqualToString:@"."]) {//"."->"0."
+        self.text
+        = self.correctText
+        = @"0.";
+        return;
+    }
+    if (self.correctText.length == 1 && [self.correctText isEqualToString:@"0"]) {
+        if (![newText isEqualToString:@"."] && [newText intValue] > 0) {//'0'->other numbers
+            self.text
+            = self.correctText
+            = newText;
+            return;
+        }
+    }
+    self.correctText = allText;
 }
 
 static NSString *kCurrectText;
