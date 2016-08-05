@@ -12,12 +12,9 @@
 @implementation UITextField (ForbidEmojiInput)
 
 static BOOL mNoEmoji = NO;
-static NSString *oldText = nil;
-
 - (BOOL)noEmoji {
     return [objc_getAssociatedObject(self, &mNoEmoji) boolValue];
 }
-
 - (void)setNoEmoji:(BOOL)noEmoji {
     objc_setAssociatedObject(self, &mNoEmoji, @(noEmoji), OBJC_ASSOCIATION_ASSIGN);
     if (noEmoji) {
@@ -38,10 +35,18 @@ static NSString *oldText = nil;
     
     NSString *primaryLaguage = self.textInputMode.primaryLanguage;
     if (primaryLaguage == nil || [primaryLaguage isEqualToString:@"emoji"]) {
-        self.text = oldText;
+        self.text = self.oldText;
         return;
     }
-    oldText = self.text;
+    self.oldText = self.text;
+}
+
+static NSString *kOldText;
+- (NSString *)oldText {
+    return objc_getAssociatedObject(self, &kOldText);
+}
+- (void)setOldText:(NSString *)oldText {
+    objc_setAssociatedObject(self, &kOldText, oldText, OBJC_ASSOCIATION_COPY);
 }
 
 @end
