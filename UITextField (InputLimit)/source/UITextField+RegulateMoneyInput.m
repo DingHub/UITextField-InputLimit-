@@ -12,15 +12,15 @@
 @implementation UITextField (RegulateMoneyInput)
 
 static BOOL mIsMoney = NO;
+- (BOOL)isMoney {
+    return [objc_getAssociatedObject(self, &mIsMoney) boolValue];
+}
 - (void)setIsMoney:(BOOL)isMoney {
     objc_setAssociatedObject(self, &mIsMoney, @(isMoney), OBJC_ASSOCIATION_ASSIGN);
     if (isMoney) {
         self.keyboardType = UIKeyboardTypeDecimalPad;//We should set key type as decimalPad at first
         [self addMoneyObserver];
     }
-}
-- (BOOL)isMoney {
-    return [objc_getAssociatedObject(self, &mIsMoney) boolValue];
 }
 
 - (void)addMoneyObserver {

@@ -12,14 +12,17 @@
 @implementation UITextField (ForbidEmojiInput)
 
 static BOOL mNoEmoji = NO;
+static NSString *oldText = nil;
+
+- (BOOL)noEmoji {
+    return [objc_getAssociatedObject(self, &mNoEmoji) boolValue];
+}
+
 - (void)setNoEmoji:(BOOL)noEmoji {
     objc_setAssociatedObject(self, &mNoEmoji, @(noEmoji), OBJC_ASSOCIATION_ASSIGN);
     if (noEmoji) {
         [self addEmojiObserver];
     }
-}
-- (BOOL)noEmoji {
-    return [objc_getAssociatedObject(self, &mNoEmoji) boolValue];
 }
 
 - (void)addEmojiObserver {
@@ -27,24 +30,16 @@ static BOOL mNoEmoji = NO;
              action:@selector(observeEmoji)
    forControlEvents:UIControlEventEditingChanged];
 }
+
 - (void)observeEmoji {
     if (self.noEmoji) {
-        NSString *allText = self.text;
-        static NSString *oldString = nil;
         NSString *primaryLaguage = self.textInputMode.primaryLanguage;
         if (primaryLaguage == nil || [primaryLaguage isEqualToString:@"emoji"]) {
-            self.text = oldString;
+            self.text = oldText;
             return;
         }
-        oldString = allText;
+        oldText = self.text;
     }
 }
 
-static NSString *kCorrectText;
-- (void)setCorrectText:(NSString *)correctText {
-    objc_setAssociatedObject(self, &kCorrectText, correctText, OBJC_ASSOCIATION_COPY);
-}
-- (NSString *)correctText {
-    return objc_getAssociatedObject(self, &kCorrectText);
-}
 @end
