@@ -16,7 +16,7 @@ static BOOL mNoEmoji = NO;
     return [objc_getAssociatedObject(self, &mNoEmoji) boolValue];
 }
 - (void)setNoEmoji:(BOOL)noEmoji {
-    objc_setAssociatedObject(self, &mNoEmoji, @(noEmoji), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &mNoEmoji, @(noEmoji), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if (noEmoji) {
         [self addEmojiObserver];
     }

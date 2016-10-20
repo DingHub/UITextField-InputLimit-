@@ -16,7 +16,7 @@ static BOOL mIsMoney = NO;
     return [objc_getAssociatedObject(self, &mIsMoney) boolValue];
 }
 - (void)setIsMoney:(BOOL)isMoney {
-    objc_setAssociatedObject(self, &mIsMoney, @(isMoney), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &mIsMoney, @(isMoney), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if (isMoney) {
         self.keyboardType = UIKeyboardTypeDecimalPad;//We should set key type as decimalPad at first
         [self addMoneyObserver];

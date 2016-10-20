@@ -10,6 +10,6 @@
 
 @interface UITextField (LimitLength)
 
-@property (assign, nonatomic) IBInspectable NSUInteger maxLength;//0 <=> no limit
+@property (assign, nonatomic) IBInspectable NSInteger maxLength;//if <=0, no limit
 
 @end
