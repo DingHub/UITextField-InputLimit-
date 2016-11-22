@@ -5,6 +5,8 @@
 eg: forbid emoji, only money decimal , limit length.<br>
 如：禁止表情符， 限制金额格式， 限制长度。<br>
 
+说明文档：[《探索之旅：扩展属性》](http://www.swifthumb.com/thread-14875-1-1.html)
+
 Usage:
 ---
 You can use these categories with code:<br>
