@@ -32,10 +32,9 @@ static NSInteger mMaxLength = 0;
         // deal with Chinese, Japanese,..., input
         // when input somothing like pinyin, we will not judge the length
         UITextRange *selectedRange = [self markedTextRange];
-        if (!selectedRange || !selectedRange.start) {
-            if (self.text.length > self.maxLength) {
-                self.text = [self.text substringToIndex:self.maxLength];
-            }
+        if (selectedRange && selectedRange.start) { return; }
+        if (self.text.length > self.maxLength) {
+            self.text = [self.text substringToIndex:self.maxLength];
         }
     }
     
